@@ -1,0 +1,31 @@
+{% extends 'base.html' %} <!--Importar la plantilla base-->
+
+{% comment %} Aqui van comentarios {% endcomment %}<!--ejemplo de como se pueden agregar comentarios-->
+
+{% block style_css %}
+{% endblock %}
+
+{% block encabezado %}
+	<h1>Recetario: </h1>
+{% endblock %}
+
+{% block contenido %}
+<p>
+	Actualmente tenemos registrados:
+	<!--Permite poner la cantidad de elementos de alguna respuesta y puede ser usado para mostrar palabras en plurales, dependiendo de la circunstancia-->
+	{% with total=recetas.count %} 
+		{{total}} receta{{total|pluralize}}
+	{% endwith %}
+</p>
+	<ul>
+		<!--En este caso por ejemplo llenamos una lista mediante un for con estructura similar a la de java
+		'dato' es un nombre de variable cualquiera para recorrer el for 
+		'recetas' es un parametro que se pasa mediante la vista inicio en views.py -->
+		{% for dato in recetas %} <!--permite acceder a cada receta-->
+		<li class="{% cycle 'par' 'impar' %}">{{dato.titulo}}</li>
+		<!-- cycle permite iterar con los valores 'impar' o 'par' -->
+		{% empty %}<!--usado en caso de que no existan elementos-->
+		<li>No hay recetas registradas aún.</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
